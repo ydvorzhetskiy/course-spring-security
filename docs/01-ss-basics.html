@@ -344,6 +344,18 @@
       </section>
 
       <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Реализация UserDeatilsAdapter</li>
+            <li>Реализация UserDetailsServiceImpl</li>
+            <li>Подключение UserDetailsServiceImpl в AuthenticationManager</li>
+            <li>Подключение NoOpPasswordEncoder в AuthenticationManager</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
         <h2 class="center">Вопросы?</h2>
       </section>
 
@@ -354,7 +366,7 @@
             <li>Написать собственный UserDetailsAdapter.</li>
             <li>Написать собственный UserDetailsServiceImpl.</li>
             <li>Интегрировать UserDetailsService в SecurityConfig.</li>
-            <li>Написать специальные методы UserRepository, позволяющие eager-загружать пользователей.</li>
+            <li>Написать специальные методы UserRepository/сделать роли EAGER-загружаемыми</li>
             <li>*Добавить BCryptPasswordEncoder, исправить хранимые пароли в БД и сохранять пользователей с
               закодированным паролем.
             </li>
