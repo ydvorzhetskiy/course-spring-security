@@ -8,5 +8,10 @@ tab_width = 2
 indent_size = 2
 ij_continuation_indent_size = 2
 
+[*.css]
+tab_width = 2
+indent_size = 2
+ij_continuation_indent_size = 2
+
 [*.java]
 ij_continuation_indent_size = 4

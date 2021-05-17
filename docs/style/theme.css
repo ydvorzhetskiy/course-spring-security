@@ -4,13 +4,17 @@
 /* Перегрузки white.css */
 
 :root {
-    --main-font: 'Roboto', sans-serif;
-    --heading-font: 'Roboto', sans-serif;
-    --heading-font-weight: 500;
+  --main-font: 'Roboto', sans-serif;
+  --heading-font: 'Roboto', sans-serif;
+  --heading-font-weight: 500;
+}
+
+.reveal {
+  font-family: 'Roboto', sans-serif;
 }
 
 .reveal .slides {
-    text-align: left;
+  text-align: left;
 }
 
 .reveal h1,
@@ -19,17 +23,17 @@
 .reveal h4,
 .reveal h5,
 .reveal h6 {
-    font-family: 'Roboto', sans-serif;
-    text-transform: none;
-    font-weight: 500;
+  font-family: 'Roboto', sans-serif;
+  text-transform: none;
+  font-weight: 500;
 }
 
 /* Собственные стили */
 
 .reveal .center {
-    text-align: center;
+  text-align: center;
 }
 
 .reveal .right {
-    text-align: right;
+  text-align: right;
 }
