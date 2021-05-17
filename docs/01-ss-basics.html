@@ -187,6 +187,10 @@
       </section>
 
       <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
         <h3>Лабораторная №1</h3>
         <div class="r-stretch">
           <ol>
@@ -277,8 +281,86 @@
       </section>
 
       <section>
-        <h2 class="center">Спасибо за внимание!</h2>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>UserDetails</b></li>
+            <li>Объект, представляющий абстракцию пользователя</li>
+            <li>После успешной аутентификации возвращается в principal</li>
+          </ul>
+        </div>
       </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>UserDetailsService</b></li>
+            <li>Сервис для хранения пользователей</li>
+            <li>Его можете реализовать самостоятельно, а можете использовать готовый</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AuthenticationManager</b></li>
+            <li>Осуществляет аутентификацию</li>
+            <li>На самом деле, делегирует AuthenticationProvider-ам</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AuthenticationProvider</b></li>
+            <li>Собственно и осуществляет аутентификацию</li>
+            <li>На самом деле, делегирует AuthenticationProvider-ам</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>PasswordEncoder</b></li>
+            <li>Решает задачу хранения паролей</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
+        <h3>Лабораторная №2</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Написать собственный UserDetailsAdapter.</li>
+            <li>Написать собственный UserDetailsServiceImpl.</li>
+            <li>Интегрировать UserDetailsService в SecurityConfig.</li>
+            <li>Написать специальные методы UserRepository, позволяющие eager-загружать пользователей.</li>
+            <li>*Добавить BCryptPasswordEncoder, исправить хранимые пароли в БД и сохранять пользователей с
+              закодированным паролем.
+            </li>
+            <li>Число 1 в чат, как разберётесь</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <h2 class="center">Спасибо за внимание!</h2>
     </section>
   </div>
 </div>
