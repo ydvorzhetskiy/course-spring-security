@@ -1,0 +1,34 @@
+### Все компании
+
+GET http://localhost:8090/company
+
+### Компании пользователя
+
+GET http://localhost:8090/company?user-id=2001
+
+### Получить компанию по id
+
+GET http://localhost:8090/company/1001
+
+### Создать компанию
+
+POST http://localhost:8090/company?user-id=2001
+Content-Type: application/json
+
+{
+  "name": "Linux Foundation"
+}
+
+### Обновить компанию
+
+PUT http://localhost:8090/company
+Content-Type: application/json
+
+{
+  "id": 1001,
+  "name": "DXC"
+}
+
+### Любая публичная информация
+
+GET http://localhost:8090/info

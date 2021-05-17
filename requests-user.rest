@@ -1,0 +1,34 @@
+### Получить список пользователей
+
+GET http://localhost:8090/user
+
+### Получить пользователя по id
+
+GET http://localhost:8090/user/2001
+
+### Создать пользователя
+
+POST http://localhost:8090/user
+Content-Type: application/json
+
+{
+  "login": "new_user",
+  "password": "password",
+  "roles": [
+    "user"
+  ]
+}
+
+### Обновить пользователя
+
+PUT http://localhost:8090/user
+Content-Type: application/json
+
+{
+  "id": 2001,
+  "login": "new_login",
+  "password": "newpassword",
+  "roles": [
+    "user"
+  ]
+}
