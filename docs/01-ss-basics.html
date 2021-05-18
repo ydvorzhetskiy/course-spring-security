@@ -501,14 +501,31 @@
         </div>
       </section>
 
+      <!-- TODO: описание всех фильтров -->
+      <section>
+        <h3>SecurityInterceptor</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Всё работу по аутентификации и авторизации осуществляет FilterSecurityInterceptor.</li>
+            <li>Но это не единственный SecurityInterceptor в окружении.</li>
+            <li>Для Method-based авторизации существует ещё MethodSecurityInterceptor,
+              который также осуществляет авторизацию, но вызывается не из цепочки фильтров, а из аспектов.</li>
+          </ul>
+        </div>
+      </section>
+
       <section>
         <h3>Упражнение</h3>
         <div class="r-stretch">
-          <ul>
+          <ol>
             <li>Запустите Ваше приложение</li>
             <li>Посмотрите в логе, какие фильтры у Вас доступны</li>
-          </ul>
+          </ol>
         </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
       </section>
     </section>
 

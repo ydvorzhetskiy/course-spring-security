@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="02 - Аутентификация"/>
+  <title>01 - Аутентификация</title>
+  <meta name="author" content="Дворжецкий Юрий">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/browse/reveal.js@4.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="style/theme.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>Фреймворк Spring Security</h2>
+      <br>
+      <h3>Модуль 02. Аутентификация</h3>
+      <br>
+      <h4 class="right">Дворжецкий Юрий</h4>
+    </section>
+
+    <section>
+      <section>
+        <h3>2.1. Аутентификация</h3>
+      </section>
+
+      <section>
+        <h3>Порядок проведения аутентификации (часть 1)</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>SecurityContextPersistenceFilter создаёт SecurityContext</li>
+            <li>Какой-то из фильтров аутентификации (первичной или вторичной)
+              достаёт логин и пароль (или токен) и создаёт объект Authentication (authenticated=false)
+            </li>
+            <li>FilterSecurityInterceptor достаёт объект Authentication (authenticated=false)
+              и передаёт его в AuthenticationManager
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Порядок проведения аутентификации (часть 2)</h3>
+        <div class="r-stretch">
+          <ol start="4">
+            <li>AuthenticationManager передаёт объект AuthenticationProvider</li>
+            <li>Authentication Provider создаёт новый объект Authentication (authenticated=true)</li>
+            <li>FilterSecurityInterceptor кладёт готовый объект Authentication в SecurityContext</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Порядок проведения аутентификации (часть 3)</h3>
+        <div class="r-stretch">
+          <ol start="7">
+            <li>В случае неуспешной аутентификации или отсутствие начального Authentication,
+              AuthenticationManager/AuthenticationProvider или FilterSecurityInterceptor, соответственно,
+              бросают Exception
+            </li>
+            <li>Этот Exception как раз обрабатывается ExceptionTranslationFilter,
+              предшествующий FilterSecurityInterceptor.
+            </li>
+            <li>ExceptionTranslationFilter генерирует статус 401</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>2.2. HTTP Basic аутентификация</h3>
+      </section>
+
+      <section>
+        <h3>HTTP Basic</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Является стандартным расширением HTTP</li>
+            <li>Определена в <a href="https://datatracker.ietf.org/doc/html/rfc7617">RFC 7617</a></li>
+            <li>Основная идея&nbsp;&mdash;&nbsp;каждый запрос передаётся логин и пароль пользователя</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>HTTP Basic</h3>
+        <pre><code class="plaintext">
+GET http://example.com/any-url
+Authorization: Basic dXNlcjpwYXNzd29yZA==
+
+# Base64(user:password)
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="img/sequence_diagram_http_basic.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Какие плюсы и минусы HTTP Basic аутентификации?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Плюсы HTTP Basic</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>До безобразия простая</li>
+            <li>Встроенная поддержка браузера</li>
+            <li>Какой-никакой стандарт</li>
+            <li>Идеальная для веб-сервисов (REST в чистом виде)</li>
+            <li>Аутентификация передаётся в заголовке</li>
+            <li>Никаких cookies</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Минусы HTTP Basic</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Без HTTPS – мы просто отдаём логин-пароль злоумышленнику</li>
+            <li>Невозможная кастомизация логина (SMS, прочее)</li>
+            <li><a link="https://habr.com/ru/post/488388/">А как сделать Logout?</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Задайте Realm для HTTP Basic аутентификации</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <h2 class="center">Спасибо за внимание!</h2>
+    </section>
+  </div>
+</div>
+<!-- Reveal JS -->
+<script src="https://unpkg.com/reveal.js@4.1.0/dist/reveal.js"></script>
+<script src="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+<script src="js/reveal-init.js"></script>
+</body>
+</html>
