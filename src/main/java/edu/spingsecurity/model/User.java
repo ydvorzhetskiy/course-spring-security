@@ -2,6 +2,7 @@ package edu.spingsecurity.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.List;
@@ -24,9 +25,11 @@ public class User {
 
     private String password;
 
+    @ToString.Exclude
     @ElementCollection
     private List<String> roles;
 
+    @ToString.Exclude
     @JoinTable(name = "user_company")
     @ManyToMany(cascade = CascadeType.ALL)
     private List<Company> companies;
