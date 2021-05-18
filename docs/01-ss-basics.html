@@ -238,16 +238,6 @@
         <h3>Основные абстракции</h3>
         <div class="r-stretch">
           <ul>
-            <li>Сейчас я буду называть абстракции, а Вы будете их смотреть вместе со мной</li>
-            <li>Ctrl + N в IntelliJ IDEA</li>
-          </ul>
-        </div>
-      </section>
-
-      <section>
-        <h3>Основные абстракции</h3>
-        <div class="r-stretch">
-          <ul>
             <li><b>SecurityContext</b></li>
             <li>Не имеет отношение к Spring Context</li>
             <li>Является контейнером для объекта Authentication</li>
@@ -276,6 +266,14 @@
               а credentials&nbsp;&mdash;&nbsp;пароль
             </li>
           </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/authentication/architecture/securitycontextholder.png"/>
         </div>
       </section>
 
@@ -366,10 +364,8 @@
             <li>Написать собственный UserDetailsAdapter.</li>
             <li>Написать собственный UserDetailsServiceImpl.</li>
             <li>Интегрировать UserDetailsService в SecurityConfig.</li>
-            <li>Написать специальные методы UserRepository/сделать роли EAGER-загружаемыми</li>
-            <li>*Добавить BCryptPasswordEncoder, исправить хранимые пароли в БД и сохранять пользователей с
-              закодированным паролем.
-            </li>
+            <li>Написать специальные методы UserRepository/сделать роли Eager.</li>
+            <li>*Добавить BCryptPasswordEncoder, исправить хранимые пароли в БД и сохранение пользователей.</li>
             <li>Число 2 в чат, как сделаете</li>
           </ol>
         </div>
@@ -377,6 +373,142 @@
 
       <section>
         <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>1.4. Интеграция с Web</h3>
+      </section>
+
+      <section>
+        <h3>Немного о Servlet API</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Это зрелая технология</li>
+            <li>С её использованием так или иначе написано большинство приложений</li>
+            <li>Spring MVC использует как раз Servlet API</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Немного о Servlet API</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/architecture/filterchain.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Spring Security в Web встраивается именно в Servlet API, не в Spring MVC.</li>
+            <li>Это, в частности, позволяет использовать Spring Security c другими Web-фреймворками.</li>
+            <li>Вы этого не увидите, но есть специальный Servlet&nbsp;&mdash;&nbsp;DelegatingFilterProxy</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/architecture/delegatingfilterproxy.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>А уже у этого сервлета есть своя цепочка фильтров&nbsp;&mdash;&nbsp;SecurityFilterChain</li>
+            <li>Они не являются фильтрами Servlet API</li>
+            <li>И у каждого фильтра своё назначение</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/architecture/filterchainproxy.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/architecture/securityfilterchain.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Spring Security в Web</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/architecture/multi-securityfilterchain.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Фильтры Spring Security</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Какие-то из них делают много работы, какие-то совсем чуть-чуть.</li>
+            <li>Каждый из них отвечает за какой-то аспект безопасности или обработки запроса.</li>
+            <li>Полный список фильтров можно найти
+              <a
+                href="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/#servlet-security-filters">
+                здесь</a>.
+            </li>
+            <li>Да, и Вы можете создавать свои собственные фильтры.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Фильтры Spring Security</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>ChannelProcessingFilter</li>
+            <li>SecurityContextPersistenceFilter</li>
+            <li>HeaderWriterFilter</li>
+            <li>CorsFilter</li>
+            <li>CsrfFilter</li>
+            <li>LogoutFilter</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Фильтры Spring Security</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>UsernamePasswordAuthenticationFilter</li>
+            <li>OpenIDAuthenticationFilter</li>
+            <li>BearerTokenAuthenticationFilter</li>
+            <li>BasicAuthenticationFilter</li>
+            <li>RememberMeAuthenticationFilter</li>
+            <li>AnonymousAuthenticationFilter</li>
+            <li>SessionManagementFilter</li>
+            <li>ExceptionTranslationFilter</li>
+            <li>FilterSecurityInterceptor</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Запустите Ваше приложение</li>
+            <li>Посмотрите в логе, какие фильтры у Вас доступны</li>
+          </ul>
+        </div>
       </section>
     </section>
 
