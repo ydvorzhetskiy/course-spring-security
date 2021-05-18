@@ -94,7 +94,7 @@
       <section>
         <h3>HTTP Basic</h3>
         <pre><code class="plaintext">
-GET http://example.com/any-url
+GET https://example.com/any-url
 Authorization: Basic dXNlcjpwYXNzd29yZA==
 
 # Base64(user:password)
@@ -102,7 +102,7 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
       </section>
 
       <section>
-        <h3>Spring Security в Web</h3>
+        <h3>HTTP Basic аутентификация</h3>
         <div class="r-stretch center">
           <img alt=""
                src="img/sequence_diagram_http_basic.png"/>
@@ -144,10 +144,101 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
       </section>
 
       <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
         <h3>Упражнение</h3>
         <div class="r-stretch">
           <ol>
             <li>Задайте Realm для HTTP Basic аутентификации</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>2.3. Form-based аутентификация</h3>
+      </section>
+
+      <section>
+        <h3>Form-based аутентификация</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Фактически это не схема аутентификации, а общий принцип</li>
+            <li>Означает "использование формы логина"</li>
+            <li>В действительности может отличаться и варьироваться</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Form-based аутентификация</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="img/sequence_diagram_form_authenticate.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Какие плюсы и минусы Form-based аутентификации?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Плюсы Form-based аутентификации</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Кастомизация UI для веб-приложений</li>
+            <li>Кастомизация процесса аутентификации (двухфакторная, капча)</li>
+            <li>Самая популярная схема</li>
+            <li>Логаут лёгкий&nbsp;&mdash;&nbsp;удаляем куку</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Минусы Form-based аутентификации</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Обычно для веб-сервисов как-то отдельно пропускают логин и сразу выдают токен.</li>
+            <li>Без HTTPS мы просто отдаём логин-пароль злоумышленнику</li>
+            <li>Необходима ещё и &laquo;вторичная&raquo; аутентификация</li>
+            <li>Logout на всех устройствах не так просто сделать</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Настройка Form-based аутентификации в Spring Security</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Выключите STATELESS режим.</li>
+            <li>Добавьте конфигурацию loginPage().</li>
+            <li>Сделайте страницу доступной всем пользователям.</li>
+            <li>*Создайте свою собственную login-страницу</li>
           </ol>
         </div>
       </section>
