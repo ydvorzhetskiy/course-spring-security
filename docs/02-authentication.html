@@ -233,14 +233,88 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
       </section>
 
       <section>
-        <h3>Упражнение</h3>
+        <h3>Лабораторная №3</h3>
         <div class="r-stretch">
           <ol>
             <li>Выключите STATELESS режим.</li>
-            <li>Добавьте конфигурацию formLogin().</li>
+            <li>Добавьте конфигурацию .formLogin().</li>
             <li>Сделайте страницу доступной всем пользователям.</li>
             <li>*Создайте свою собственную login-страницу.</li>
           </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>2.4. Anonymous аутентификация</h3>
+      </section>
+
+      <section>
+        <h3>Anonymous аутентификация</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Это вторичный механизм аутентификации.</li>
+            <li>Это паттерн Null Object в применении к Security</li>
+            <li>Соответствующий фильтр создаёт &laquo;минимального&raquo; пользователя,
+              если ни один фильтр первичной аутентификации не создал объект Authentication.</li>
+            <li>Позволяет проще реализовывать концепцию Deny by Default.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Приведите примеры паттерна Null Object в разработке/реальной жизни</p>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Приведите примеры паттерна Null Object в разработке/реальной жизни</p>
+          <ul>
+            <li>Страница 404</li>
+            <li>NoOp-логгер</li>
+            <li>Collections.emptyList()</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Anonymous аутентификация</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Существует отдельный раздел DSL для конфигурации анонимной
+              аутентификации&nbsp;&mdash;&nbsp;.anonymous()</li>
+            <li>Нужен он для настройки того самого пользователя, который будет</li>
+            <li>Но фильтр анонимной аутентификации включается при наличии .permitAll()</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Реализация CurrentUserService</li>
+            <li>Использование его в различных методах (с обычной и анонимной аутентификациями)</li>
+            <li>Настройка anonymous-аутентификации, чтобы избежать ошибок</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Лабораторная №4</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Настроить anonymous-аутентификацию, чтобы избежать ошибок c UserDetails</li>
+          </ul>
         </div>
       </section>
 
