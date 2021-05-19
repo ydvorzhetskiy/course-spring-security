@@ -257,13 +257,14 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
       <section>
         <h3>Anonymous аутентификация</h3>
         <div class="r-stretch">
-          <ol>
+          <ul>
             <li>Это вторичный механизм аутентификации.</li>
             <li>Это паттерн Null Object в применении к Security</li>
             <li>Соответствующий фильтр создаёт &laquo;минимального&raquo; пользователя,
-              если ни один фильтр первичной аутентификации не создал объект Authentication.</li>
+              если ни один фильтр первичной аутентификации не создал объект Authentication.
+            </li>
             <li>Позволяет проще реализовывать концепцию Deny by Default.</li>
-          </ol>
+          </ul>
         </div>
       </section>
 
@@ -289,12 +290,13 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
       <section>
         <h3>Anonymous аутентификация</h3>
         <div class="r-stretch">
-          <ol>
+          <ul>
             <li>Существует отдельный раздел DSL для конфигурации анонимной
-              аутентификации&nbsp;&mdash;&nbsp;.anonymous()</li>
+              аутентификации&nbsp;&mdash;&nbsp;.anonymous()
+            </li>
             <li>Нужен он для настройки того самого пользователя, который будет</li>
             <li>Но фильтр анонимной аутентификации включается при наличии .permitAll()</li>
-          </ol>
+          </ul>
         </div>
       </section>
 
@@ -317,6 +319,249 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
           </ul>
         </div>
       </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>2.5. Remember-me аутентификация</h3>
+      </section>
+
+      <section>
+        <h3>Remember-me аутентификация раньше</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Раньше объект Authentication хранился в сессии.</li>
+            <li>Между запусками сервера или при бездействии пользователя, сессия удалялась.</li>
+            <li>Поэтому возникала необходимость вторичной аутентификации пользователя между сессиями.</li>
+            <li>Эта та самая галочка &laquo;Запомнить меня&raquo;</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Remember-me аутентификация сейчас</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>В REST нет сессий.</li>
+            <li>И между запросами (а они могут приходить на разные сервера) теперь обязательно нужно
+              аутентифицировать пользователя
+            </li>
+            <li>Собственно, сейчас это поведение по умолчанию для REST-приложений</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Токены в Remember-me</h3>
+        <div class="r-stretch">
+          <p>Для реализации подобного функционала после первичной аутентификации
+            пользователю возвращается некоторый токен: в cookies или просто в ответе на запрос).</p>
+          <p>Токены могут быть разные:</p>
+          <ul>
+            <li>Persistent tokens (или случайно-генерируемые)</li>
+            <li>Hash-based (или Signature-based)</li>
+            <li>JWT (на самом деле, это Signature-based)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Случайно-генерируемые (Persistent)</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Генерируется случайная последовательность байт какой-то длины</li>
+            <li>Сохраняется в БД с информацией о пользователе, которому выдан, и возвращается в ответе</li>
+            <li>При вторичной аутентификации производится поиск токена от пользователя в БД</li>
+            <li>Если токен найден&nbsp;&mdash;&nbsp;пользователь сохраняется в Authentication</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Какие плюсы и минусы случайно-генерируемых (Persistent) токенов?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Плюсы Persistent tokens</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Достаточно проста в реализации</li>
+            <li>При безопасном генераторе случайных чисел&nbsp;&mdash;&nbsp;это фактически
+              абсолютная защита
+            </li>
+            <li>И не нужно никакой криптографии</li>
+            <li>Логаут со всех устройств&nbsp;&mdash;&nbsp;легко!</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Минусы Persistent tokens</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Токены нужно хранить</li>
+            <li>Это расходы на хранение (память/жёсткий диск)</li>
+            <li>Если мы не пользуемся сессиями (REST), то при любом запросе на сервер происходит запрос к БД</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Есть Welcome-страница с текстом &laquo;Привет на нашем сайте, ${username}!&raquo;.</p>
+          <p>Когда будет происходить обращение к БД при использовании случайно-генерируемых (Persistent) токенов?</p>
+          <ul>
+            <li>При проверке токена реального пользователя или подделанного злоумышленником?</li>
+            <li>При получении имени пользователя?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Есть Welcome-страница с текстом &laquo;Привет на нашем сайте, ${username}!&raquo;.</p>
+          <p>Когда будет происходить обращение к БД при использовании случайно-генерируемых (Persistent) токенов?</p>
+          <ul>
+            <li class="red">При проверке токена реального пользователя или подделанного злоумышленником?</li>
+            <li class="red">При получении имени пользователя?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Конфигурация Persistent-token подхода</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Hash-based tokens</h3>
+        <pre><code class="plaintext">
+base64(
+    username + ":" + expirationTime + ":" +
+    md5Hex(username + ":" + expirationTime +
+            ":" password + ":" + key)
+)
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Какие плюсы и минусы Hash-based токенов?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Плюсы Hash-based токенов</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Не нужно лезть в БД при проверке!</li>
+            <li>Но не в дефолтной реализации Spring Security :)</li>
+            <li>Совсем немного криптографии</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Минусы Hash-based токенов</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Сделать логаут со всех устройств не получится.</li>
+            <li>Для этого как раз нужно хранить токены.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Есть Welcome-страница с текстом &laquo;Привет на нашем сайте, ${username}!&raquo;.</p>
+          <p>Когда будет происходить обращение к БД при использовании Hash-based токенов?</p>
+          <ul>
+            <li>При проверке токена реального пользователя или подделанного злоумышленником?</li>
+            <li>При получении имени пользователя?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <p>Есть Welcome-страница с текстом &laquo;Привет на нашем сайте, ${username}!&raquo;.</p>
+          <p>Когда будет происходить обращение к БД при использовании Hash-based токенов?</p>
+          <ul>
+            <li class="green">При проверке токена реального пользователя или подделанного злоумышленником?</li>
+            <li class="red">При получении имени пользователя?</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Конфигурация Hash-based подхода</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>JWT (JSON Web Token)</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Эволюция hash-based токенов.</li>
+            <li>Условно JWT = JSON + подпись.</li>
+            <li>Допускает дополнительную информацию в JSON.</li>
+            <li><a href="https://datatracker.ietf.org/doc/html/rfc7519">RFC-7591</a> на JWT</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>JWT</h3>
+        <pre><code class="plaintext">
+{
+  "alg": "HS512",
+  "typ": "JWT"
+}
+
+{
+  "sub": "12345",
+  "name": "John Gold",
+  "admin": true
+}
+
+signature
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>JWT</h3>
+        <pre><code class="plaintext">
+eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.
+eyJzdWIiOiIxMjM0NSIsIm5hbWUiOiJKb2huIEdvbGQiLCJhZG1pbiI6dHJ1ZX0K.
+LIHjWCBORSWMEibq-tnT8ue_deUqZx1K0XxCOXZRrBI
+        </code></pre>
+      </section>
+
+      <!-- TODO JWT -->
 
       <section>
         <h2 class="center">Вопросы?</h2>
