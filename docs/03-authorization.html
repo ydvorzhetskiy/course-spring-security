@@ -45,11 +45,11 @@
       <section>
         <h3>Виды авторизации в Spring Security</h3>
         <div class="r-stretch">
-          <ol>
+          <ul>
             <li>авторизация на основе URL;</li>
             <li>авторизация на основе вызовов методов;</li>
             <li>авторизация на основе доменных сущностей (ACL).</li>
-          </ol>
+          </ul>
         </div>
       </section>
 
@@ -316,7 +316,7 @@ public class CompanyService {
 @Service
 public class CompanyService {
 
-    @PreFilter(value = "hasPermission(filterObject, 'READ')",
+    @PreFilter(value = "hasPermission(filterObject, 'DELETE')",
                filterTarget = "companies")
     public void delete(List&lt;Company> companies) {
         // ...
@@ -347,7 +347,9 @@ public class CompanyService {
         <h3>Лабораторная №7</h3>
         <div class="r-stretch">
           <ol>
+            <li>Сначала поставьте @EnableMethodSecurity.</li>
             <li>Настройте авторизацию на основе методов в сервисах или репозиториях.</li>
+            <li>Используйте @Secured или @PreAuthorize с указанием ролей.</li>
             <li>Число 7 в чат, как сделаете.</li>
           </ol>
         </div>
