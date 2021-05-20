@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="03 - Авторизация"/>
+  <title>03 - Авторизация</title>
+  <meta name="author" content="Дворжецкий Юрий">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/browse/reveal.js@4.1.0/dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/dist/theme/white.css">
+  <link rel="stylesheet" href="style/theme.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/monokai.css">
+</head>
+<body>
+<div class="reveal">
+  <div class="slides">
+    <section>
+      <h2>Фреймворк Spring Security</h2>
+      <br>
+      <h3>Модуль 03. Авторизация</h3>
+      <br>
+      <h4 class="right">Дворжецкий Юрий</h4>
+    </section>
+
+    <section>
+      <section>
+        <h3>3.1. Авторизация в Spring Security</h3>
+      </section>
+
+      <section>
+        <h3>Авторизация в Spring Security</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Авторизация&nbsp;&mdash; это процесс предоставления или проверки прав
+              на определённые действия в системе
+            </li>
+            <li>Авторизация возможно только после аутентификации</li>
+            <li>В мире, в действительности, есть несколько подходов: RBAC, ABAC, ACL и т.д.</li>
+            <li>Так или иначе, со Spring Security можно реализовать бОльшую часть в данных подходах</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Виды авторизации в Spring Security</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>авторизация на основе URL;</li>
+            <li>авторизация на основе вызовов методов;</li>
+            <li>авторизация на основе доменных сущностей (ACL).</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Абстракции для авторизации</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Вне зависимости от способа авторизации, в авторизации задействованы одни и те же абстракции</li>
+            <li>Авторизация в Spring Security основана на голосовании.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Сейчас я буду называть абстракции, а Вы будете их смотреть вместе со мной</li>
+            <li>Ctrl + N в IntelliJ IDEA</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/access-decision-voting.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>GrantedAuthority</b> и <b>SimpleGrantedAuthority</b></li>
+            <li>Атомарное &laquo;разрешение&raquo; для пользователя</li>
+            <li>В действительности, просто обёртка над строчкой</li>
+            <li>Может быть специального вида ROLE_ADMIN для роли, а может быть просто CAN_WRITE_COMPANY</li>
+            <li>Нет иерархии (хотя их можно сделать)</li>
+            <li>Что эта роль означает определяется нашими правилами</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AbstractSecurityInterceptor</b></li>
+            <li>Вызывает AccessDecisionManager</li>
+            <li>Собственно есть две реализации: FilterSecurityInterceptor и MethodSecurityInterceptor</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AccessDecisionManager</b></li>
+            <li>Основной интерфейс, принимающий решение о доступе к объекту</li>
+            <li>В действительности организует голосование между AccessDecisionVoter</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AccessDecisionManager</b></li>
+            <li>Есть три реализации AffirmativeBased (по умолчанию!), UnanimousBased, ConsensusBased</li>
+            <li>Когда голосует один AccessDecisionVoter (на это направлены все варианты современного DSL),
+              то они эквивалентны</li>
+            <li>Но всё равно можно сделать так, чтобы вызывалось несколько голосующих :)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AccessDecisionVoter</b></li>
+            <li>Собственно, сам голосующий.</li>
+            <li>Существует несколько реализаций, в зависимости от типа проверки</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Реализации AccessDecisionVoter</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>RoleVoter&nbsp;&mdash;&nbsp;голосующий на основании ролей</li>
+            <li>Authenticated&nbsp;&mdash;&nbsp;голосующий на основании ролей</li>
+            <li>WebExpressionVoter&nbsp;&mdash;&nbsp;голосующий на основании веб-выражения</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Реализации AccessDecisionVoter</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Почти всё в SecurityConfig сделано таким образом, чтобы получался ровно один Voter</li>
+            <li>При сложном выражении образуется WebExpressionVoter, а не комбинация конфигурации разных</li>
+            <li>Но при этом всё равно можно сделать так, чтобы голосовали несколько Voters</li>
+            <li>Помним, что по умолчанию AffirmativeBased, а не UnanimousBased!</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/access-decision-voting.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>3.2. Авторизация на основе URL</h3>
+      </section>
+
+      <section>
+        <h3>Как это всё работает (Web)</h3>
+        <div class="r-stretch center">
+          <img alt=""
+               src="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/images/servlet/authorization/filtersecurityinterceptor.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Настройка различных Voters средствами DSL</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
+        <h3>Лабораторная №6</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Настройте авторизацию на основе URL и методов</li>
+            <li>Необходима авторизация пользователей к CompanyController,
+              UserController и InfoController.</li>
+            <li>Проверьте доступ к данным URL и методам</li>
+            <li>Число 6 в чат, как сделаете.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <h2 class="center">Спасибо за внимание!</h2>
+    </section>
+  </div>
+</div>
+<!-- Reveal JS -->
+<script src="https://unpkg.com/reveal.js@4.1.0/dist/reveal.js"></script>
+<script src="https://unpkg.com/reveal.js@4.1.0/plugin/highlight/highlight.js"></script>
+<script src="js/reveal-init.js"></script>
+</body>
+</html>
