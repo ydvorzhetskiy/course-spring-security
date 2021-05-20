@@ -316,11 +316,11 @@ public class CompanyService {
 @Service
 public class CompanyService {
 
-    @PreFilter(value = "hasPermission(filterObject, 'DELETE')",
-               filterTarget = "companies")
-    public void delete(List&lt;Company> companies) {
-        // ...
-    }
+  @PreFilter(value = "hasPermission(filterObject, 'DELETE')",
+             filterTarget = "companies")
+  public void delete(List&lt;Company> companies) {
+    // ...
+  }
 }
         </code></pre>
       </section>
