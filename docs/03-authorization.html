@@ -124,7 +124,8 @@
             <li><b>AccessDecisionManager</b></li>
             <li>Есть три реализации AffirmativeBased (по умолчанию!), UnanimousBased, ConsensusBased</li>
             <li>Когда голосует один AccessDecisionVoter (на это направлены все варианты современного DSL),
-              то они эквивалентны</li>
+              то они эквивалентны
+            </li>
             <li>Но всё равно можно сделать так, чтобы вызывалось несколько голосующих :)</li>
           </ul>
         </div>
@@ -207,11 +208,147 @@
         <h3>Лабораторная №6</h3>
         <div class="r-stretch">
           <ol>
-            <li>Настройте авторизацию на основе URL и методов</li>
+            <li>Настройте авторизацию на основе URL</li>
             <li>Необходима авторизация пользователей к CompanyController,
-              UserController и InfoController.</li>
-            <li>Проверьте доступ к данным URL и методам</li>
+              UserController и InfoController.
+            </li>
+            <li>Разделение можно также делать по HTTP-методам</li>
+            <li>Проверьте доступ к данным URL и HTTP-методам</li>
             <li>Число 6 в чат, как сделаете.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>3.3. Авторизация на основе вызовов методов</h3>
+      </section>
+
+      <section>
+        <h3>Method-based авторизация</h3>
+        <div class="r-stretch">
+          <p>SpringSecurity поддерживает три вида аннотаций для управления доступом на основе методов:</p>
+          <ul>
+            <li>Аннотация @Secured (самая простая)</li>
+            <li>Аннотации JSR-250</li>
+            <li>Pre-Post аннотации (самый мощный механизм)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Method-based авторизация</h3>
+        <pre><code class="language-java">
+@EnableGlobalMethodSecurity(
+    prePostEnabled = true,
+    jsr250Enabled = true,
+    securedEnabled = true
+)
+public class MethodSecurityConfig {
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@Secured</h3>
+        <pre><code class="language-java">
+@Service
+public class UserService {
+
+    @Secured("ROLE_ADMIN")
+    public UserDto create(UserDto userDto) {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@PreAuthorize</h3>
+        <pre><code>
+@Service
+public class CompanyService {
+
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public List&lt;CompanyDto> getAll() {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@PreAuthorize</h3>
+        <pre><code>
+@Service
+public class CompanyService {
+
+    @PreAuthorize("hasPermission(#company, 'WRITE')")
+    public void save(Company company) {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@PostAuthorize</h3>
+        <pre><code>
+@Service
+public class CompanyService {
+
+    @PostAuthorize("hasPermission(returnObject, 'READ')")
+    public Company getMainCompany() {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@PreFilter</h3>
+        <pre><code>
+@Service
+public class CompanyService {
+
+    @PreFilter(value = "hasPermission(filterObject, 'READ')",
+               filterTarget = "companies")
+    public void delete(List&lt;Company> companies) {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h3>@PostFilter</h3>
+        <pre><code>
+@Service
+public class CompanyService {
+
+    @PostFilter("hasPermission(filterObject, 'READ')")
+    public List&lt;Company> getAll() {
+        // ...
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
+        <h3>Лабораторная №7</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Настройте авторизацию на основе методов в сервисах или репозиториях.</li>
+            <li>Число 7 в чат, как сделаете.</li>
           </ol>
         </div>
       </section>
