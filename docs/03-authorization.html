@@ -232,7 +232,7 @@
       <section>
         <h3>Method-based авторизация</h3>
         <div class="r-stretch">
-          <p>SpringSecurity поддерживает три вида аннотаций для управления доступом на основе методов:</p>
+          <p>Spring Security поддерживает три вида аннотаций для управления доступом на основе методов:</p>
           <ul>
             <li>Аннотация @Secured (самая простая)</li>
             <li>Аннотации JSR-250</li>
@@ -349,6 +349,160 @@ public class CompanyService {
           <ol>
             <li>Настройте авторизацию на основе методов в сервисах или репозиториях.</li>
             <li>Число 7 в чат, как сделаете.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+    </section>
+
+    <section>
+      <section>
+        <h3>3.3. Авторизация на основе доменных сущностей</h3>
+      </section>
+
+      <section>
+        <h3>ACL</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Spring Security поддерживает авторизацию на основе доменных сущностей.</li>
+            <li>Условно &laquo;Пользователь Иванов не может работать с компанией ООО "Ромашка"&raquo;</li>
+            <li>Для этого задействовано множество механизмов, включая кэши и т.д.</li>
+            <li>Это дополнительный модуль spring-security-acl</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>ACL на примере прав к папкам Windows.</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h3>Схема БД</h3>
+        <div class="r-stretch center">
+          <img alt="" src="img/db_diagram_acl.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>Упражнение</h3>
+        <div class="r-stretch">
+          <ul>
+            <li>Сейчас я буду называть абстракции, а Вы будете их смотреть вместе со мной</li>
+            <li>Ctrl + N в IntelliJ IDEA</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>Acl</b></li>
+            <li>Собственно сам список</li>
+            <li>Состоит из AccessControlEntry (ACE)</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>MutableAcl</b></li>
+            <li>То же самое, только модифицируемый, для сохранения</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AccessControlEntry</b></li>
+            <li>Запись в ACL</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>Permission</b></li>
+            <li>Атомарное разрешение</li>
+            <li>В действительности Вы можете вводить свои собственные, но в реальной жизни хватает этих</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>Sid</b></li>
+            <li>Security ID</li>
+            <li>Может означать как конкретного пользователя, так и роль</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>ObjectIdentity</b></li>
+            <li>ID объекта</li>
+            <li>Может не соответствовать реальному объекту и ID</li>
+            <li>Вся магия заключается в определении данного ID</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Основные абстракции</h3>
+        <div class="r-stretch">
+          <ul>
+            <li><b>AclService</b>, <b>MutableAclService</b></li>
+            <li>Сервисы для чтения и сохранения ACL в БД</li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <h3>Схема БД</h3>
+        <div class="r-stretch center">
+          <img alt="" src="img/db_diagram_acl.png"/>
+        </div>
+      </section>
+
+      <section>
+        <h3>ДЕМО</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Реализация ACL</li>
+          </ol>
+        </div>
+      </section>
+
+      <section>
+        <h2 class="center">Вопросы?</h2>
+      </section>
+
+      <section>
+        <h3>Лабораторная №8</h3>
+        <div class="r-stretch">
+          <ol>
+            <li>Добавьте ACL в Ваше приложение</li>
+            <li>Не забудьте добавить сохранение ACL при сохранении компании</li>
+            <li>Число 8 в чат, как сделаете.</li>
           </ol>
         </div>
       </section>
