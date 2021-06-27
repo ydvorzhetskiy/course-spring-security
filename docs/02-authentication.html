@@ -47,7 +47,7 @@
         <h3>Порядок проведения аутентификации (часть 2)</h3>
         <div class="r-stretch">
           <ol start="4">
-            <li>AuthenticationManager передаёт объект AuthenticationProvider</li>
+            <li>AuthenticationManager передаёт объект Authentication в AuthenticationProvider</li>
             <li>Authentication Provider создаёт новый объект Authentication (authenticated=true)</li>
             <li>FilterSecurityInterceptor кладёт готовый объект Authentication в SecurityContext</li>
           </ol>
@@ -123,7 +123,7 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
         <div class="r-stretch">
           <ul>
             <li>До безобразия простая</li>
-            <li>Встроенная поддержка браузера</li>
+            <li>Встроенная поддержка всех браузеров</li>
             <li>Какой-никакой стандарт</li>
             <li>Идеальная для веб-сервисов (REST в чистом виде)</li>
             <li>Аутентификация передаётся в заголовке</li>
@@ -399,7 +399,7 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
         <h3>Плюсы Persistent tokens</h3>
         <div class="r-stretch">
           <ul>
-            <li>Достаточно проста в реализации</li>
+            <li>Достаточно просты в реализации</li>
             <li>При безопасном генераторе случайных чисел&nbsp;&mdash;&nbsp;это фактически
               абсолютная защита
             </li>
@@ -452,14 +452,14 @@ Authorization: Basic dXNlcjpwYXNzd29yZA==
           </ol>
         </div>
       </section>
-
+!!!!!!!!!!!!!!!!!!!! target на все ссылки!!!!!!!!!!!!!!!!!!!!!!!!
       <section>
         <h3>Hash-based tokens</h3>
         <pre><code class="plaintext">
 base64(
     username + ":" + expirationTime + ":" +
     md5Hex(username + ":" + expirationTime +
-            ":" password + ":" + key)
+            ":" + password + ":" + key)
 )
         </code></pre>
       </section>
@@ -607,7 +607,7 @@ LIHjWCBORSWMEibq-tnT8ue_deUqZx1K0XxCOXZRrBI
         <div class="r-stretch">
           <ul>
             <li>Не нужно лезть в БД при проверке!</li>
-            <li>Можно добавлять дополнительную информацию, об авторизации</li>
+            <li>Можно добавлять дополнительную информацию, об авторизации, например</li>
           </ul>
         </div>
       </section>
