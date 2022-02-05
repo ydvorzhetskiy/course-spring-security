@@ -462,8 +462,8 @@
             <li>Какие-то из них делают много работы, какие-то совсем чуть-чуть.</li>
             <li>Каждый из них отвечает за какой-то аспект безопасности или обработки запроса.</li>
             <li>Полный список фильтров можно найти
-              <a
-                href="https://docs.spring.io/spring-security/site/docs/5.3.6.RELEASE/reference/html5/#servlet-security-filters">
+              <a target="_blank"
+                 href="https://docs.spring.io/spring-security/reference/servlet/architecture.html#servlet-security-filters">
                 здесь</a>.
             </li>
             <li>Да, и Вы можете создавать свои собственные фильтры.</li>
@@ -511,7 +511,8 @@
             <li>Всё работу по аутентификации и авторизации осуществляет FilterSecurityInterceptor.</li>
             <li>Но это не единственный SecurityInterceptor в окружении.</li>
             <li>Для Method-based авторизации существует ещё MethodSecurityInterceptor,
-              который также осуществляет авторизацию, но вызывается не из цепочки фильтров, а из аспектов.</li>
+              который также осуществляет авторизацию, но вызывается не из цепочки фильтров, а из аспектов.
+            </li>
           </ul>
         </div>
       </section>
