@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
 
+// Аннотация @EnableWebSecurity помечена @Configuration,
+// поэтому здесь можно определять различные beans
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -23,7 +25,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/company/**", "/user/**").authenticated()
             .antMatchers("/info", "/error").permitAll()
-            .antMatchers("/**").denyAll()
+            // Это реализация принципа deny-by-default
+            .anyRequest().denyAll()
             .and()
             .httpBasic();
     }
