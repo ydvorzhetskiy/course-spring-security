@@ -26,7 +26,7 @@ public class User {
     private String password;
 
     @ToString.Exclude
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles;
 
     @ToString.Exclude

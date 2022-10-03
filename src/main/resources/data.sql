@@ -1,4 +1,5 @@
 -- Companies
+-- TODO: rename to clients!!
 insert into company(id, name)
 values (1001, 'Amazon'),
        (1002, 'IBM'),
